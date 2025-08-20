@@ -1,14 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Intermediate Redirect</title>
-  <!-- Ngăn không gửi referrer khi mở link đích -->
-  <meta name="referrer" content="no-referrer">
-  
-</head>
-<body>
-  <a href="https://testip.zrb8822.cc/" target="_blank">aaaaaa</a>
-  <p>Đang chuyển hướng...</p>
-</body>
-</html>
+const express = require("express");
+const app = express();
+const PORT = 3000;
+
+// Link đích có gắn mã CNZZ
+const DESTINATION = "https://your-destination.com";
+
+app.get("/redirect", (req, res) => {
+  // Trả về HTML có meta referrer=no-referrer + auto redirect bằng JS
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>Redirecting...</title>
+      <meta name="referrer" content="no-referrer">
+      <script>
+        window.location.href = "${DESTINATION}";
+      </script>
+    </head>
+    <body>
+      <p>redirect...</p>
+    </body>
+    </html>
+  `);
+});
+
+app.listen(PORT, () => {
+  console.log(\`Server chạy tại http://localhost:\${PORT}\`);
+});
